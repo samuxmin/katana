@@ -1,5 +1,6 @@
 body{
     background-color: aliceblue;
+    font-family: 'Rubik', sans-serif;
 }
 
 .container{
@@ -23,11 +24,12 @@ h1{
 }
 #results{
     font-size: 26px;
+    font-weight: 500;
 }
 .choice_btn{
     padding: 20px;
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
     background-color: beige;
     border-radius: 4px;
     margin: 10px;

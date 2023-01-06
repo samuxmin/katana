@@ -20,7 +20,19 @@ export function handleClick(player){
             text = "It's a TIE";
             break;
     }
-    element.innerText = `Computer choose ${computer} - ${text}`
+    let imgFile = ""
+    switch(computer){
+        case "Rock":
+            imgFile = "cobblestone"
+            break;
+        case "Paper":
+            imgFile = "paper";
+            break;
+        case "Scissors":
+            imgFile = "shears";
+            break;
+    }
+    element.innerHTML = `Computer choose ${computer} <img alt="${computer}" src="/assets/images/${imgFile}.png"></img> - ${text}`
     refreshStats()
 }
 window.handleClick = handleClick;
