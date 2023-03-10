@@ -37,7 +37,7 @@ export function handleClick(player){
 }
 window.handleClick = handleClick;
 
-document.getElementById("play_button").addEventListener("click", ()=> {
+document.getElementById("play_offline").addEventListener("click", ()=> {
     loadGame();
     const title = document.getElementsByClassName("title")[0];
     title.innerHTML = "";

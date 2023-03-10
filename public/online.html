@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Katana online! Rock paper scissors</title>
+    <title>Document</title>
+</head>
+<body>
+    <div class="root">
+        <div class="container">
+            <div id="login">
+                <h1 class="title">Welcome to Katana Online!</h1>
+                <div id="game" >
+                    <!--
+                        <p>Please login or <a href="/register">register</a></p>
+                    -->
+                    <p>Enter the username you want to use</p>
+                    <div id="login">
+                        <form id="loginForm">
+                            <input type="text" name="username" id="username">
+                            <!--input password-->
+                            <button class="login-btn" type="submit">Login</button>
+                        </form>
+                    </div>
+                    <a class="play-btn" id="play_offline" href="/">Play Offline</a>
+                </div>
+            </div>
+
+            <div id="online-game">
+                <div id="friend-connection">
+                    <form id="friend-form">
+                        <label for="friend-username">Enter your friend username or wait untill he tipes: <b id="playerUsername"></b></label>
+                        <br>
+                        <div style="margin: auto;">
+                            <input id="friend-username" name="friend-username" type="text">
+                            <button type="submit" id="friend-username-submit">Connect</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/online.js"></script>
+</body>
+</html>

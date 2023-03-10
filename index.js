@@ -1,15 +1,22 @@
+import http from "http";
 import express from "express";
-import path from "path";
-import cors from "cors"
-import dotenv from "dotenv"
-const PORT = process.env.PORT || "3000";
-const app = express()
-app.use(express.json())
-dotenv.config()
-app.use(express.static(path.join(path.resolve(),"public")))
-app.use(cors())
-app.get(["/", "/index.html"], (req, res) => {
-    res.sendFile(path.resolve() + "/index.html");
-})
+import {Server, Socket} from 'socket.io';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import connection from "./sockets.js";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+const port = process.env.PORT || 3000
+connection(io);
+server.listen(port,() => {
+    console.log("Server on port",port)
+});
 
-app.listen(PORT)
+app.use(express.static("public"));
+
+app.get("/online", (req, res) => {
+    res.sendFile(__dirname + "/public/online.html");
+})

@@ -2,7 +2,10 @@ body{
     background-color: aliceblue;
     font-family: 'Rubik', sans-serif;
 }
-
+input{
+    height: 30px;
+    border: 2px solid black;
+}
 .container{
     display: grid;
     height: 90vh;
@@ -14,19 +17,50 @@ h1{
     display: block;
 }
 
-#play_button{
+
+.login-btn{
+    height: 34px;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    font-size: medium;
+    background-color: red;
+    color: white;
+    border: none;
+}
+
+.play-btn{
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    font-size: medium;
     background-color: red;
     padding-top: 20px;
     padding-bottom: 20px;
     width: 100%;
+    margin: 1px;
     color: white;
     border: none;
 }
-#results{
-    font-size: 26px;
-    font-weight: 500;
+/*Online game*/
+#online-game{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 }
-.choice_btn{
+#friend-username-submit{
+    height: 34px;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    font-size: medium;
+    background-color: red;
+    color: white;
+    border: none;
+}
+/*Offline game*/
+.choice-btn{
     padding: 20px;
     font-size: 20px;
     font-weight: 500;
@@ -52,6 +86,10 @@ h1{
     width: 80vw;
     height:80vh;
 }
+#results{
+    font-size: 26px;
+    font-weight: 500;
+}
 #wins{
     color: green;
 }
@@ -66,7 +104,7 @@ h1{
 }
 @media screen and (max-width: 600px) {
     .choice_btn {
-      font-size: 14px;
+        font-size: 14px;
       flex-grow: 1fr;
     }
     .buttons{
