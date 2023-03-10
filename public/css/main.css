@@ -16,7 +16,9 @@ h1{
     text-align: center;
     display: block;
 }
-
+footer{
+    text-align: center;
+}
 
 .login-btn{
     height: 34px;
