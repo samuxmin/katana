@@ -20,7 +20,3 @@ server.listen(port,() => {
 });
 
 app.use(express.static("public"));
-
-app.get("/online", (req, res) => {
-    res.sendFile(__dirname + "/online.html");
-})
