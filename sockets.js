@@ -1,6 +1,6 @@
 function socketConnection ( io ) {
-    let users =  []
-    let rounds = {}
+    let users =  [] //CONTIENE LOS SOCKETS DE LOS USUARIOS,
+    //ESTOS CONTIENEN EL NICKNAME Y UN OBJETO ROUNDS DONDE CADA INDICE CONTIENE LOS ROUNDS
     io.on('connection', socket => {
        
         socket.on("new user",function (data, cb){
@@ -9,7 +9,7 @@ function socketConnection ( io ) {
                 socket.nickname = data;
                 socket.rounds = {}
                 users.push({nickname:socket.nickname, socket})
-
+                console.info("New user with nickname",socket.nickname)
             }else{
                 cb({ok:false,msg:"Nickname already in use"})
             }
@@ -29,17 +29,17 @@ function socketConnection ( io ) {
                 socket.rounds[i] = []
                 i  = findIndex(socket.nickname)
                 friendSocket.rounds[i] = []
-                console.log(socket.rounds)
-                console.log(friendSocket.rounds)
                 friendSocket.emit("game start", findIndex(socket.nickname))
                 socket.emit("game start", friendIndex)
+                socket.isPlaying = [true, friendSocket]
+                friendSocket.isPlaying =[true, socket]
+                console.info("Connected", socket.nickname, "with", friendSocket.nickname)
             }
         })
 
         socket.on("round choice", data => {
             // { choice: 'Rock', friend: 0, rounds: 0 }
             const {friend} = data
-            console.log(data.choice)
             let friendSocket = users[friend].socket
 
             socket.rounds[friend.toString()].push(data.choice)
@@ -48,12 +48,18 @@ function socketConnection ( io ) {
             if(friendSocket.rounds[playerIString].length == socket.rounds[friend].length){
                 let roundN = socket.rounds[friend].length - 1 
                 socket.emit("round end", {player:data.choice, oponent: friendSocket.rounds[playerIString][roundN]});
-                friendSocket.emit("round end",{oponent:data.choice, player: friendSocket.rounds[playerIString][roundN]})
+                friendSocket.emit("round end", {oponent:data.choice, player: friendSocket.rounds[playerIString][roundN]})
             }
         })
         
         socket.on("disconnect", data =>{
             if(!socket.nickname) return;
+            if(socket.isPlaying && socket.isPlaying[0]){
+                let friendSocket = socket.isPlaying[1]
+                friendSocket.emit("friend disconnected")
+                friendSocket.rounds[findIndex(socket.nickname).toString()] = 0;
+                friendSocket.isPlaying = [false]
+            }
             users.splice(findIndex(socket.nickname),1);
         })
 

@@ -1,3 +1,4 @@
+
 const socket = io()
 
 const loginForm = document.getElementById("loginForm")
@@ -5,14 +6,20 @@ const login = document.getElementById("login")
 const user = document.getElementById("username")
 const playerUsername = document.getElementById("playerUsername")
 const game = document.getElementById("online-game")
+const connectionDiv = document.getElementById("friend-connection"); 
+const friendForm = document.getElementById("friend-form");
+const friendUser = document.getElementById("friend-username");
+
 let usernameText;
+
 loginForm.addEventListener("submit", e=>{
     e.preventDefault();
     usernameText = user.value
     socket.emit("new user", usernameText, function(data){
         if(data.ok){
-            login.hidden = true;
+            login.hidden = "true";
             game.style.display = "flex";
+            connectionDiv.style.display = "block";
             playerUsername.innerText = usernameText
         }else{
             Swal.fire({
@@ -26,9 +33,6 @@ loginForm.addEventListener("submit", e=>{
 
 // Connection with friend
 
-const connectionDiv = document.getElementById("friend-connection"); 
-const friendForm = document.getElementById("friend-form");
-const friendUser = document.getElementById("friend-username");
 let friendNick;
 
 friendForm.addEventListener("submit",e=>{
@@ -76,18 +80,32 @@ let gameHtml = `<div class="buttons">
     </div>`
 
 socket.on("game start", data => {
-    connectionDiv.hidden = true;
+    connectionDiv.style.display = "none";
+    console.log("game start")
     game.innerHTML = gameHtml;
     friend = data; // INDEX DEL AMIGO
 
 })
 
+socket.on("friend disconnected",() => {
+    Swal.fire({
+        icon:"warning",
+        title: "Friend disconnected"
+    })
+    stats.wins = 0;
+    stats.loses = 0;
+    stats.rounds = 0;
+    game.innerHTML = "";
+    connectionDiv.style.display = "block"
+})
 
 socket.on("round end", data => {
+
     const {player, oponent} = data;
     console.log(data)
-    result = play(player, oponent)
+    let result = play(player, oponent)
     refreshStats()
+    console.log(result)
     switch(result){
         case "WIN":
             Swal.fire({
@@ -113,8 +131,7 @@ socket.on("round end", data => {
 })
 
 function handleClick(chosen){
-    choice = chosen;
-    const data = {choice, friend, rounds}
+    const data = {choice: chosen, friend, rounds}
     socket.emit("round choice", data)
     disableButtons(true)
 }
@@ -142,7 +159,7 @@ function play(player, oponent){
     }
     if(player == "Paper"){
         if(oponent == "Scissors"){
-            stats.loses+=1;
+            stats.loses += 1;
             return "LOST";
         }
     
