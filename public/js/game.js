@@ -58,7 +58,8 @@ export function refreshStats(){
 
 export function loadGame(){
     let {rounds, wins, loses} = stats;
-    let gameHtml = `<div class="buttons">
+    let gameHtml = 
+    `<div class="buttons">
     <button class="choice-btn" onclick="handleClick('Rock')">Rock <img src="assets/images/cobblestone.png" alt="rock"/></button>
     <button class="choice-btn" onclick="handleClick('Paper')">Paper <img src="assets/images/paper.png" alt="paper"/></button>
     <button class="choice-btn" onclick="handleClick('Scissors')">Scissors <img src="assets/images/shears.png" alt="scissors"/></button>
